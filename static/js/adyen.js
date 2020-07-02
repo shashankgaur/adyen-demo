@@ -49,9 +49,9 @@ const onSubmit = (state, component) => {
     }).then(response => response.json())
         .then(response => {
             if (response.action) {
-                if (response.resultCode === 'RedirectShopper') {
+                if (response.resultCode === 'RedirectShopper') {                    
                     localStorage.setItem('redirectPaymentData', response.action.paymentData);
-                }
+                }                
                 adyenComponent.handleAction(response.action);
 
             } else {
@@ -70,14 +70,17 @@ const onAdditionalDetails = (state, component) => {
         method: 'POST',
         headers: {
             Accept: 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
         },
         body: JSON.stringify(state.data)
     }).then(response => response.json())
         .then(response => {
             if (response.action) {
+                console.log("0");
                 adyenComponent.handleAction(response.action);
             } else {
+                console.log("2");
                 handleFinalState(response.resultCode);
             }
         })

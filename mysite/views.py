@@ -12,7 +12,7 @@ from django.contrib import messages
 
 merchant_account = "SupportRecruitementCOM"
 apikey = "AQE1hmfxKo3NaxZDw0m/n3Q5qf3Ve55dHZxYTFdTxWq+l3JOk8J4BO7yyZBJ4o0JviXqoc8j9sYQwV1bDb7kfNy1WIxIIkxgBw==-q7XjkkN/Cud0WELZF+AzXpp/PuCB8+XmcdgqHYUWzTA=-Kk9N4dG837tIyjZF"
-origin_key = "pub.v2.8115734003142692.aHR0cDovLzE1LjIzNi4xMzIuMTkz.hfsCMh5z6ROjYXzy9t1JkG4AcIQuj72mW37IKyISmrA"
+origin_key = "pub.v2.8115734003142692.aHR0cDovL2xvY2FsaG9zdDo4MDAw.1EveuPfJf3aj7AsulSgaDjkvHdHeF_fI1-W_EMtEACQ"
 
 
 
@@ -98,6 +98,10 @@ def payments(frontend_request):
     print("/payments request:\n" + str(payment_methods_request))
     r = requests.post(url=url, headers=headers, json=payment_methods_request)
     text_response = r.text
+    with open('data.txt', 'w') as outfile:
+        json.dump(payment_methods_request, outfile)
+        json.dump(r.json(), outfile)
+    outfile.close()
     print("/payments response:\n" + text_response)
 
     return format_response(r.json())
@@ -122,11 +126,15 @@ def payment_details(frontend_request):
     r = requests.post(url=url, headers=headers, json=details)
     response = r.text
     print("payments/details response:\n" + response)
+    with open('data.txt', 'w') as outfile:
+        json.dump(details, outfile)
+        json.dump(r.json(), outfile)
+    outfile.close()
     return response
 
 
 
-def submitAdditionalDetails():
+def submitAdditionalDetails(request):
     details_response = payment_details(request)
     return HttpResponse(details_response, content_type='application/json')
 
@@ -149,6 +157,10 @@ def payment_methods():
     r = requests.post(url=url, headers=headers, json=payment_methods_request)
     response = r.text
     print("/paymentMethods response:\n" + response)
+    with open('data.txt', 'w') as outfile:
+        json.dump(payment_methods_request, outfile)
+        json.dump(r.json(), outfile)
+    outfile.close()
     return response
 
 def checkout(request):
