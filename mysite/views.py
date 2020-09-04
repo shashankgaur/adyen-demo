@@ -98,7 +98,7 @@ def payments(frontend_request):
     print("/payments request:\n" + str(payment_methods_request))
     r = requests.post(url=url, headers=headers, json=payment_methods_request)
     text_response = r.text
-    with open('data.txt', 'w') as outfile:
+    with open('data.txt', 'a') as outfile:
         json.dump(payment_methods_request, outfile)
         json.dump(r.json(), outfile)
     outfile.close()
@@ -126,7 +126,7 @@ def payment_details(frontend_request):
     r = requests.post(url=url, headers=headers, json=details)
     response = r.text
     print("payments/details response:\n" + response)
-    with open('data.txt', 'w') as outfile:
+    with open('data.txt', 'a') as outfile:
         json.dump(details, outfile)
         json.dump(r.json(), outfile)
     outfile.close()
@@ -157,7 +157,7 @@ def payment_methods():
     r = requests.post(url=url, headers=headers, json=payment_methods_request)
     response = r.text
     print("/paymentMethods response:\n" + response)
-    with open('data.txt', 'w') as outfile:
+    with open('data.txt', 'a') as outfile:
         json.dump(payment_methods_request, outfile)
         json.dump(r.json(), outfile)
     outfile.close()
